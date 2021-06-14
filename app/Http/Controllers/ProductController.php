@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return response(Product::all(), Response::HTTP_ACCEPTED);
     }
 
     /**
