@@ -64,8 +64,18 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product::delete();
+        $product->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+    
+    public function frontend()
+    {
+        return Product::all();
+    }
+    
+    public function backend()
+    {
+        return Product::paginate();
     }
 }

@@ -27,4 +27,11 @@ class Order extends Model
             return $item->admin_revenue;
         });
     }
+
+    public function getAmbassadorRevenueAttribute()
+    {
+        return $this->orderItems->sum(function(OrderItem $item) {
+            return $this->ambassador_revenue;
+        });
+    }
 }
