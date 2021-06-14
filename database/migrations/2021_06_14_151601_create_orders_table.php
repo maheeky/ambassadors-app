@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('ambassador_email');
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('email');
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('zip')->nullable();
