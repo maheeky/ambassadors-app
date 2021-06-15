@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers; 
 use App\Http\Controllers\AuthController; 
 use App\Http\Controllers\AmbassadorController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StatsController; 
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -54,5 +55,8 @@ Route::prefix('ambassador')->group(function() {
     Route::get('products/frontend', [ProductController::class, 'frontend'] );
     Route::get('products/backend', [ProductController::class, 'backend'] );
 
+    Route::middleware(['auth:sanctum', 'scope.ambassador'])->group(function() {
+        Route::get('stats', [StatsController::class, 'index'] );
+    });
 });
 

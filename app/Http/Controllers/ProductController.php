@@ -89,18 +89,34 @@ class ProductController extends Controller
         $products = \Cache::remember('products_backend', 30*60, function() {
                 return Product::all();
             });
-        $total = $products->count();
-
         /**
          * If we are in a search.
          */
         $s = $request->input('s');
-        if($s) {
+        if($s) 
+        {
             $products = $products->filter(
                     fn(Product $product) => 
                     \Str::contains($product->title, $s) || \Str::contains($product->description, $s)
             );
         }
+
+        //Grab count to pass into meta array
+        $total = $products->count();
+        if( $sort = $request->input('sort')) {
+            if( $sort === 'asc' ) {
+                $products = $products->sortBy([
+                    //Use spaceship operator to return -1,0 or 1 based on whether a is less than, equal to or greater than b. 
+                    fn($a, $b) => $a['price'] <=> $b['price']
+                ]);
+            } else if( $sort === 'desc' ) {
+                $products = $products->sortBy([
+                    //Use spaceship operator to return -1,0 or 1 based on whether a is less than, equal to or greater than b. 
+                    fn($a, $b) => $b['price'] <=> $a['price']
+                ]);
+            }
+        }
+
         return [
             'data' => $products->forPage($page, 9)->values(),
             'meta' => [
