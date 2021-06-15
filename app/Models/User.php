@@ -77,7 +77,7 @@ class User extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class)->where('complete', 1);
     }
 
     public function getRevenueAttribute()
@@ -89,6 +89,6 @@ class User extends Authenticatable
 
     public function getNameAttribute()
     {
-        return $this->firstName . ' ' . $this->lastName;
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

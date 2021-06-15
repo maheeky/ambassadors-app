@@ -30,15 +30,16 @@ class StatsController extends Controller
 
     public function rankings()
     {
-        // $ambassadors = User::ambassadors->get();
+        $ambassadors = User::ambassadors()->get();
 
-        // $rankings = $ambassadors->map(function(User $user) {
-        //     return [
-        //         'name' => $user->name,
-        //         'revenue' => $user->revenue
-        //     ];
-        // });
+        $rankings = $ambassadors->map(
+            fn(User $user) =>
+            [
+                'name' => $user->name,
+                'revenue' => $user->revenue
+            ],
+        );
 
-        // return $rankings;
+        return $rankings->sortByDesc('revenue')->values();
     }
 }
