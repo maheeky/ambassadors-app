@@ -71,11 +71,43 @@ class ProductController extends Controller
     
     public function frontend()
     {
-        return Product::all();
+        if( \Cache::get('products_frontend') ) {
+            $products = \Cache::get('products_frontend');
+        } else {
+            $products = Product::all();
+        }
+        \Cache::set('products_frontend', $products, 30*60);
+
+        return $products;
     }
     
-    public function backend()
+    public function backend(Request $request)
     {
-        return Product::paginate();
+        $page = $request->input('page', 1);
+
+        /** @var Collection $products */
+        $products = \Cache::remember('products_backend', 30*60, function() {
+                return Product::all();
+            });
+        $total = $products->count();
+
+        /**
+         * If we are in a search.
+         */
+        $s = $request->input('s');
+        if($s) {
+            $products = $products->filter(
+                    fn(Product $product) => 
+                    \Str::contains($product->title, $s) || \Str::contains($product->description, $s)
+            );
+        }
+        return [
+            'data' => $products->forPage($page, 9)->values(),
+            'meta' => [
+                'total' => $products->count(),
+                'page' => $page,
+                'last_page' => ceil($total / 9)
+            ],
+        ];
     }
 }
