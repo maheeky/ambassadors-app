@@ -63,3 +63,9 @@ Route::prefix('ambassador')->group(function() {
     });
 });
 
+
+//Checkout
+//Ambassador
+Route::prefix('checkout')->group(function() {
+    Route::get('links/{code}', [LinkController::class, 'show'] );
+});
