@@ -30,16 +30,6 @@ class StatsController extends Controller
 
     public function rankings()
     {
-        $ambassadors = User::ambassadors()->get();
-
-        $rankings = $ambassadors->map(
-            fn(User $user) =>
-            [
-                'name' => $user->name,
-                'revenue' => $user->revenue
-            ],
-        );
-
-        return $rankings->sortByDesc('revenue')->values();
+        return Redis::zrevrange('rankings', 0, -1, 'WITHSCORES');
     }
 }
