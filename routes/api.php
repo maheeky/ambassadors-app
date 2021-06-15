@@ -68,4 +68,6 @@ Route::prefix('ambassador')->group(function() {
 //Ambassador
 Route::prefix('checkout')->group(function() {
     Route::get('links/{code}', [LinkController::class, 'show'] );
+    Route::post('orders', [OrderController::class, 'store'] );
+
 });
