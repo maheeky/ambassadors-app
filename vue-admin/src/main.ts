@@ -6,7 +6,7 @@ import router from './router'
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:8000/api/admin/';
-
+axios.defaults.withCredentials = true;
 Vue.config.productionTip = false
 
 new Vue({

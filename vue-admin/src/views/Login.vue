@@ -32,7 +32,7 @@ export default {
             await axios.post('login', {
                 email: this.email,
                 password: this.password,
-            })
+            });
         }
     }
 }
