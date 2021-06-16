@@ -1,5 +1,5 @@
 <template>
-  <form class="form-signin" @submit.prevent="submit">
+  <form class="form-signin" @submit.prevent="submit"> <!-- Prevent submission of form, and call method. -->
     <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
 
     <label for="first_name" class="sr-only">First Name</label>
@@ -23,8 +23,32 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    name: "Register"
+    name: "Register",
+    data() {
+      return {
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: '',
+          password_confirm: '',
+      }
+    },
+    methods: {
+       async submit() {
+        await axios.post('http://localhost:8000/api/admin/register', {
+          first_name: this.firstName,
+          last_name: this.lastName,
+          email: this.email,
+          password: this.password,
+          password_confirm: this.passwordConfirm,
+        });
+
+        await this.$router.push('/login');
+      }
+    }
 }
 </script>
 
