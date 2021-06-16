@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <body>
-            <Nav />
+            <Nav :user="user"/>
                 <div class="container-fluid">
                     <div class="row">
             <Menu />
@@ -39,10 +39,28 @@
   import Vue from 'vue';
   import Nav from '../components/Nav.vue';
   import Menu from '../components/Menu.vue';
+  import axios from 'axios';
+  import {User} from "../models/user";
 
   export default {
     name: 'Layout',
     components: {Nav, Menu},
+    data() {
+        return {
+            user: new User()
+        }
+    },
+    async mounted() {
+        try {
+            const {data} = await axios.get('user');
+            
+            this.user = data;
+        } catch(e) {
+            await this.$router.push('/login');
+        }
+
+    },
+
   }
 </script>
 

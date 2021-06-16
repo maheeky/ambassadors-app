@@ -16,15 +16,14 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: "Login",
     data() {
       return {
-          first_name: '',
-          last_name: '',
           email: '',
           password: '',
-          password_confirm: '',
       }
     },
     methods: {
@@ -33,6 +32,8 @@ export default {
                 email: this.email,
                 password: this.password,
             });
+
+            await this.$router.push('/');
         }
     }
 }
