@@ -1,13 +1,13 @@
 <template>
     <main class="form-signin">
-        <form>
+        <form @submit.prevent="submit">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
                 <div class="form-floating">
-                    <input type="email" class="form-control" placeholder="name@example.com">
+                    <input type="email" class="form-control" placeholder="name@example.com" v-model="email">
                     <label for="floatingInput">Email address</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input type="password" class="form-control" placeholder="Password" v-model="password">
                     <label for="floatingPassword">Password</label>
                 </div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
@@ -17,7 +17,24 @@
 
 <script>
 export default {
-    name: "Login"
+    name: "Login",
+    data() {
+      return {
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: '',
+          password_confirm: '',
+      }
+    },
+    methods: {
+        async submit() {
+            await axios.post('login', {
+                email: this.email,
+                password: this.password,
+            })
+        }
+    }
 }
 </script>
 
