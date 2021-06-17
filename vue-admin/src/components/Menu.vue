@@ -6,6 +6,9 @@
                     <router-link to="/users" class="nav-link" active-class="active">
                         Users
                     </router-link>
+                    <router-link to="/products" class="nav-link" active-class="active">
+                        Products
+                    </router-link>
                 </li>
             </ul>
         </div>
