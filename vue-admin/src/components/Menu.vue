@@ -30,4 +30,7 @@
         font-size: 1.25em;
         font-weight: 550em;
     }
+    #sidebarMenu {
+        margin-top: 2.5em;
+    }
 </style>

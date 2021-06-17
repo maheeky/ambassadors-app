@@ -8,6 +8,7 @@ import Links from '@/views/Links.vue'
 import Products from '@/views/products/Products.vue'
 import ProductForm from '@/views/products/ProductForm.vue'
 import Orders from '@/views/Orders.vue';
+import Profile from '@/views/Profile.vue';
 
 Vue.use(VueRouter)
 
@@ -24,7 +25,8 @@ const routes: Array<RouteConfig> = [
       {path: '/products', component: Products},
       {path: '/products/create', component: ProductForm},
       {path: '/products/:id/edit', component: ProductForm},
-      {path: '/orders', component: Orders}
+      {path: '/orders', component: Orders},
+      {path: '/profile', component: Profile},
     ]
   }
 ];
