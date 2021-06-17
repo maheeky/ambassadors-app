@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <body>
-            <Nav :user="user"/>
+            <Nav/>
                 <div class="container-fluid">
                     <div class="row">
             <Menu />
@@ -25,16 +25,11 @@
   export default {
     name: 'Layout',
     components: {Nav, Menu},
-    data() {
-        return {
-            user: new User()
-        }
-    },
     async mounted() {
         try {
             const {data} = await axios.get('user');
             
-            this.user = data;
+           await this.$store.dispath('setUser', data); // Here we are passing the info from the returned data into VueX store. 
         } catch(e) {
             await this.$router.push('/login');
         }

@@ -16,12 +16,16 @@
 
     export default {
         name: 'Nav',
-        props: ['user'],
         methods: {
             async logout() {
                 await axios.post('logout', {});
 
                 await this.$router.push('/login');
+            }
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;  //Fetching the User data from the VueX store. 
             }
         }
     }
