@@ -41,7 +41,7 @@ Route::prefix('admin')->group(function() {
 
     Route::middleware(['auth:sanctum', 'scope.admin'])->group(function() {
         Route::get('ambassadors', [AmbassadorController::class, 'index']);
-        Route::get('users/{$id}/links', [LinkController::class, 'index']);
+        Route::get('users/{id}/links', [LinkController::class, 'index']);
         Route::get('orders', [OrderController::class, 'index' ]);
 
         Route::apiResource('products', ProductController::class );
