@@ -16,6 +16,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
+  import VueRouter from 'vue-router';
   import Nav from '../components/Nav.vue';
   import Menu from '../components/Menu.vue';
   import axios from 'axios';
