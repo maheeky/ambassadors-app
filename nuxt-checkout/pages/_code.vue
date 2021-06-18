@@ -3,7 +3,7 @@
     <main>
       <div class="py-5 text-center">
         <h2>Welcome</h2>
-        <p class="lead"> has invited you to buy these products!</p>
+        <p class="lead">{{ user.first_name }} {{ user.last_name }} has invited you to buy these products!</p>
       </div>
 
       <div class="row g-5">
@@ -79,18 +79,22 @@
 
 <script lang="ts">
   import Vue from 'vue';
+  import {Context} from '@nuxt/types';
 
   export default Vue.extend({
+    async asyncData(ctx: Context) { //Using the asyncData method to populate the User from the get request prior to rendering - this ensures all data is in the DOM.
+      const {data} = await ctx.$axios.get(`links/${ctx.params.code}`);
+
+      const user = data.user;
+
+      return {
+        user
+      }
+    },
     data() {
       return {
         user: null
       }
     },
-    async mounted() {
-      console.log(this.$route.params.code);
-      const {data} = await this.$axios.get(`links/${this.$route.params.code}`);
-
-      console.log(data);
-    }
   })
 </script>
