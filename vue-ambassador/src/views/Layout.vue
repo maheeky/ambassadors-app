@@ -50,12 +50,20 @@
 <script>
     import Nav from '@/components/Nav.vue';
     import Header from '@/components/Header.vue';
+    import axios from 'axios';
+    import {onMounted} from 'vue';
+    import {useStore} from "vuex";
 
     export default {
         name: 'Layout',
         components: { Nav, Header },
         setup() { //Composition API - vue 3 specific. 
-            
+        const store = useStore(); //Store is no longer used on the Vue Instance, as in vue 2. 
+            onMounted(async() => {
+                const {data} = await axios.get('user');
+
+                await store.dispatch('setUser', data); //Adding the data as before, but on the store object.
+            });
         }
     }
 </script>
