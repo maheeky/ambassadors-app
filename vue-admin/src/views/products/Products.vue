@@ -74,7 +74,7 @@
                 if(confirm('Are you sure you want to delete the product?') ) {
                     await axios.delete(`products/${id}`);
 
-                    this.products = this.products.filter(p => p.id !== id);
+                    this.products = this.products.filter((p: any) => p.id !== id);
                 }
             }
         }

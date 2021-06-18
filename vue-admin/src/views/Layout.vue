@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <body>
+        <body> 
             <Nav/>
                 <div class="container-fluid">
                     <div class="row">
@@ -15,28 +15,25 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import VueRouter from 'vue-router';
   import Nav from '../components/Nav.vue';
   import Menu from '../components/Menu.vue';
-  import axios from 'axios';
+  import axios from 'axios'; 
+  import Vue from 'vue';
   import {User} from "../models/user";
 
-  export default {
+  export default Vue.extend({
     name: 'Layout',
-    components: {Nav, Menu},
+    components: {Menu, Nav},
     async mounted() {
         try {
             const {data} = await axios.get('user');
-            
-           await this.$store.dispath('setUser', data); // Here we are passing the info from the returned data into VueX store. 
+
+           await this.$store.dispatch('setUser', data); // Here we are passing the info from the returned data into VueX store. 
         } catch(e) {
             await this.$router.push('/login');
-        }
-
-    },
-
-  }
+      }
+    }
+  });
 </script>
 
 <style lang="scss">

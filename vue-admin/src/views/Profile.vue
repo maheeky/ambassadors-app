@@ -3,13 +3,13 @@
         <h3>Account Information</h3>
         <form @submit.prevent="infoSubmit">
             <div class="mb-3">
-                <v-text-field label="First Name" v-model="first_name"/>
+                <v-text-field label="First Name" v-model="user.first_name"/>
             </div>
             <div class="mb-3">
-                <v-text-field label="Last Name" v-model="last_name"/>
+                <v-text-field label="Last Name" v-model="user.last_name"/>
             </div>    
             <div class="mb-3">
-                <v-text-field label="Email" type="email" v-model="email"/>
+                <v-text-field label="Email" type="email" v-model="user.email"/>
             </div>
             <v-btn color="primary" type="submit">Save</v-btn>
         </form>
@@ -34,26 +34,16 @@
         name: "Profile",
         data() {
             return {
-                first_name: '',
-                last_name: '',
-                email: '',
                 password: '',
                 password_confirm: ''
             }
         },
-        async mounted() {
-            const {data} = await axios.get('user');
-
-            this.first_name = data.first_name;
-            this.last_name = data.last_name;
-            this.email = data.email;
-        },
         methods: {
             async infoSubmit() {
                 await axios.put('users/info', {
-                    first_name: this.first_name,
-                    last_name: this.last_name,
-                    email: this.email
+                    first_name: this.user.first_name,
+                    last_name: this.user.last_name,
+                    email: this.user.email
                 });
             },
             async passwordSubmit() {
@@ -61,6 +51,11 @@
                     password: this.password,
                     password_confirm: this.password_confirm
                 });
+            }
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;  //Fetching the User data from the VueX store. 
             }
         }
     }
