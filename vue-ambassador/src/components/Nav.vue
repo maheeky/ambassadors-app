@@ -9,6 +9,7 @@
         </ul>
 
         <div class="text-end" v-if="user">
+            <router-link to="/stats" class="btn me-2 btn-success">Stats</router-link>
           <a href="#" type="button" class="btn btn-outline-light me-2" @click="logout">Logout</a>
           <router-link to="/profile" class="btn btn-warning">{{ user.first_name }} {{ user.last_name }}</router-link>
         </div>
