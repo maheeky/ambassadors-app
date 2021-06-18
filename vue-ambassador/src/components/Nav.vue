@@ -9,13 +9,13 @@
         </ul>
 
         <div class="text-end" v-if="user">
-          <button type="button" class="btn btn-outline-light me-2">Logout</button>
-          <button type="button" class="btn btn-warning">{{ user.first_name }} {{ user.last_name }}</button>
+          <a href="#" type="button" class="btn btn-outline-light me-2" @click="logout">Logout</a>
+          <router-link to="/profile" class="btn btn-warning">{{ user.first_name }} {{ user.last_name }}</router-link>
         </div>
 
         <div class="text-end" v-if="!user">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+          <router-link to="/login" class="btn btn-outline-light me-2">Login</router-link>
+          <router-link to="/register" class="btn btn-warning">Sign-up</router-link>
         </div>
 
       </div>
@@ -26,6 +26,7 @@
 <script>
     import {useStore} from 'vuex';
     import {computed} from 'vue';
+    import axios from 'axios';
 
     export default {
         name: 'Nav',
@@ -33,8 +34,12 @@
             const store = useStore();
             const user = computed(() => store.state.user ); //Return the state's user from the computed callback. 
 
+            const logout = async () => { 
+                await axios.post('logout');
+            }
             return {
-                user
+                user,
+                logout
             }
         }
     }

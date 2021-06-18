@@ -28,9 +28,13 @@
             const store = useStore();
 
             const user = computed(() => store.state.user);
-            title.value = user.value.revenue ? '$' + user.value.revenue : 'Welcome';
-            description.value = user.value.revenue ? 'You have earned so far' : 'Share links to earn money';
+            title.value = user.value ? '$' + user.value.revenue : 'Welcome';
+            description.value = user.value ? 'You have earned so far' : 'Share links to earn money';
 
+            watch(user, () => {
+                title.value = user.value ? '$' + user.value.revenue : 'Welcome';
+                description.value = user.value ? 'You have earned so far' : 'Share links to earn money';
+            })
             return {
                 title,
                 description,

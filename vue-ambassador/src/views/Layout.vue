@@ -59,10 +59,17 @@
         components: { Nav, Header },
         setup() { //Composition API - vue 3 specific. 
         const store = useStore(); //Store is no longer used on the Vue Instance, as in vue 2. 
-            onMounted(async() => {
-                const {data} = await axios.get('user');
 
-                await store.dispatch('setUser', data); //Adding the data as before, but on the store object.
+            onMounted(async() => {
+                try {
+                    const {data} = await axios.get('user');
+    
+                    await store.dispatch('setUser', data); //Adding the data as before, but on the store object.
+                } catch(e) {
+                    console.log(e);
+                    await store.displatch('setUser', null);
+                }
+
             });
         }
     }
