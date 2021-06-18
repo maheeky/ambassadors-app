@@ -43,11 +43,13 @@
         setup() {
             const store = useStore();
             const user = computed(() => store.state.user);
+
             const infoData = reactive({
                 first_name : user.value.first_name,
                 last_name: user.value.last_name,
                 email: user.value.email,
             });
+
             const passwordData = reactive({
                 password: '',
                 password_confirm: '',
@@ -60,12 +62,12 @@
             });
 
             const infoSubmit = async () => {
-                const {data} = await put('users/info', infoData);
+                const {data} = await axios.put('users/info', infoData);
                 await store.dispatch('setUser', data);
             }
 
             const passwordSubmit = async () => {
-                await axios.put('setUser', data);
+                await axios.put('users/password', passwordData);
             }
 
             return {

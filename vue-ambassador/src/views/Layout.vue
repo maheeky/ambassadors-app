@@ -5,7 +5,8 @@
         
     <main>
 
-        <Header/>
+        
+        <Header v-if="showHeader"/>
 
     <div class="album py-5 bg-light">
         <div class="container">
@@ -33,14 +34,17 @@
     import Nav from '@/components/Nav.vue';
     import Header from '@/components/Header.vue';
     import axios from 'axios';
-    import {onMounted} from 'vue';
+    import {computed, onMounted} from 'vue';
+    import {useRoute} from 'vue-router';
     import {useStore} from "vuex";
 
     export default {
         name: 'Layout',
         components: { Nav, Header },
         setup() { //Composition API - vue 3 specific. 
-        const store = useStore(); //Store is no longer used on the Vue Instance, as in vue 2. 
+        const store = useStore(); //Store is no longer used on the Vue Instance, as in vue 2.
+        const route = useRoute();
+        const showHeader = computed(() => route.path == '/' || route.path == '/backend' );
 
             onMounted(async() => {
                 try {
@@ -53,6 +57,9 @@
                 }
 
             });
+            return {
+                showHeader
+            }
         }
     }
 </script>
