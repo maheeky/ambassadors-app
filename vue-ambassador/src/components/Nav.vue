@@ -9,9 +9,10 @@
         </ul>
 
         <div class="text-end" v-if="user">
-            <router-link to="/stats" class="btn me-2 btn-success">Stats</router-link>
-          <a href="#" type="button" class="btn btn-outline-light me-2" @click="logout">Logout</a>
-          <router-link to="/profile" class="btn btn-warning">{{ user.first_name }} {{ user.last_name }}</router-link>
+          <router-link to="/stats" class="btn me-2 btn-outline-info">Stats</router-link>
+          <router-link to="/rankings" class="btn me-2 btn-outline-info">Rankings</router-link>
+          <a href="#" type="button" class="btn btn-outline-info me-2" @click="logout">Logout</a>
+          <router-link to="/profile" class="btn btn-info text-black">{{ user.first_name }} {{ user.last_name }}</router-link>
         </div>
 
         <div class="text-end" v-if="!user">
@@ -37,6 +38,7 @@
 
             const logout = async () => { 
                 await axios.post('logout');
+                await store.dispatch('setUser', null);
             }
             return {
                 user,

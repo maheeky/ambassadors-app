@@ -52,8 +52,7 @@
     
                     await store.dispatch('setUser', data); //Adding the data as before, but on the store object.
                 } catch(e) {
-                    console.log(e);
-                    await store.displatch('setUser', null);
+                    await store.dispatch('setUser', null);;
                 }
 
             });

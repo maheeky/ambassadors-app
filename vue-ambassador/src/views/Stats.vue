@@ -39,7 +39,6 @@
                 links.value = data;
             })
             const checkoutUrl = (code: string) => `${process.env.VUE_APP_CHECKOUT_URL}/${code}`;
-
             return {
                 links,
                 checkoutUrl
