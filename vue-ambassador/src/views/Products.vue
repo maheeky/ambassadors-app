@@ -25,6 +25,9 @@
             </div>
         </div>
     </div>
+    <div class="d-flex justify-content center mt-4">
+        <button class="btn btn-primary" @click="loadMore">Load More</button>
+    </div>
 </div>
 </template>
 
@@ -39,20 +42,31 @@
             
             const search = (s: string) => {
                 context.emit('set-filters', {
-                    s
+                    ...props.filters,
+                    s,
+                    page: 1
                 }); 
             }
 
             const sort = (sort: string) => {
                 context.emit('set-filters', {
                     ...props.filters, //Spreading the old values into the filters array to keep track of filters.
-                    sort
+                    sort,
+                    page: 1
                 })
+            }
+
+            const loadMore = () => {
+                context.emit('set-filters', {
+                    ...props.filters, //Spreading the old values into the filters array to keep track of filters.
+                    page: props.filters.page + 1
+                });
             }
 
             return {
                 search,
-                sort
+                sort,
+                loadMore
             }
         }
     }
