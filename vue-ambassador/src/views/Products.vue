@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content center mt-4">
+    <div class="d-flex justify-content center mt-4" v-if="filters.page < lastPage">
         <button class="btn btn-primary" @click="loadMore">Load More</button>
     </div>
 </div>
@@ -36,7 +36,7 @@
 
     export default {
         name: "Products",
-        props: ['products', 'filters'],
+        props: ['products', 'filters', 'lastPage'],
         emits: ['set-filters'],
         setup(props: any, context: SetupContext) {
             

@@ -1,6 +1,6 @@
 <template>
 
-    <Products :products="products" :filters="filters" @set-filters="load($event)"/>
+    <Products :products="products" :filters="filters" @set-filters="load($event)" :lastPage="lastPage"/>
     
 </template>
 
@@ -22,6 +22,7 @@
                 sort: '',
                 page: 1
             });
+            const lastPage = ref(0);
 
             const load = async (f: Filter) => {
                 filters.s = f.s;
@@ -43,6 +44,7 @@
                 }
 
                 const {data} = await axios.get(`products/backend?${arr.join('&')}`);
+                lastPage.value = data.meta.last_page; 
                 
                 //If the page is 1, we have just searched or sorted - so replace the data. Otherwise merge with spread operator. 
                 products.value = filters.page === 1 ? data.data : [...products.value, ...data.data];
@@ -54,7 +56,8 @@
            return {
                products,
                filters,
-               load
+               load,
+               lastPage
            }
         }
     }

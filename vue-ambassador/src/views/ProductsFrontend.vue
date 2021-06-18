@@ -1,5 +1,5 @@
 <template>
-    <Products :products="filteredProducts" :filters="filters" @set-filters="filtersChanged"/>
+    <Products :products="filteredProducts" :filters="filters" @set-filters="filtersChanged" :lastPage="lastPage"/>
 </template>
 
 <script lang="ts">
@@ -20,17 +20,21 @@
                 sort: '',
                 page: 1
             });
+            const lastPage = ref(0);
+            const perPage = 9;
 
             onMounted(async () => {
                 const {data} = await axios.get('products/frontend');
                 
                 allProducts.value = data;
-                filteredProducts.value = data;
+                filteredProducts.value = data.slice(0, filters.page * perPage);
+                lastPage.value = Math.ceil(data.length / perPage); //Calculate last page manually on the front end
            });
 
             const filtersChanged = (f: Filter) => {
                 filters.s = f.s;
                 filters.sort = f.sort;
+                filters.page = f.page;
 
                 let products = allProducts.value.filter(
                     p => p.title.toLowerCase().indexOf(filters.s.toLowerCase()) >= 0
@@ -47,14 +51,15 @@
                         return filters.sort ==='asc' ? sign : -sign; 
                     });
                 }
-
-                filteredProducts.value = products;
+                lastPage.value = Math.ceil(products.length / perPage);
+                filteredProducts.value = products.slice(0, filters.page * perPage);
             }
 
            return {
                filteredProducts,
                filters,
-               filtersChanged
+               filtersChanged,
+               lastPage
            }
         }
     }
