@@ -4,8 +4,8 @@
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><router-link to="/" href="#" class="nav-link px-2 text-secondary">Frontend</router-link></li>
-          <li><a href="#" class="nav-link px-2 text-white">Backend</a></li>
+          <li><router-link to="/" exact-active-class="text-info" href="#" class="nav-link px-2 text-nav">Frontend</router-link></li>
+          <li><router-link to="/backend" active-class="text-info" href="#" class="nav-link px-2 text-nav">Backend</router-link></li>
         </ul>
 
         <div class="text-end" v-if="user">
@@ -49,5 +49,7 @@
 </script>
 
 <style scoped>
-
+  .text-nav {
+    color: #ffc107;
+  }
 </style>
