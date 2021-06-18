@@ -2,6 +2,13 @@
 <div>
     <div class="col-md-12 mb-4 input-group">
         <input class="form-control" placeholder="Search Products" @keyup="search($event.target.value)">
+        <div class="input-group-append">
+            <select class="form-select" @change="sort($event.target.value)">
+                <option>Sort Order</option>
+                <option value="asc">Price Ascending</option>
+                <option value="desc">Price Descending</option>
+            </select>
+        </div>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -36,8 +43,16 @@
                 }); 
             }
 
+            const sort = (sort: string) => {
+                context.emit('set-filters', {
+                    ...props.filters, //Spreading the old values into the filters array to keep track of filters.
+                    sort
+                })
+            }
+
             return {
-                search
+                search,
+                sort
             }
         }
     }
