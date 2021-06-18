@@ -40,11 +40,13 @@
         },
         methods: {
             async infoSubmit() {
-                await axios.put('users/info', {
+                const {data} = await axios.put('users/info', {
                     first_name: this.user.first_name,
                     last_name: this.user.last_name,
                     email: this.user.email
                 });
+
+                await this.$store.dispatch('setUser', data);
             },
             async passwordSubmit() {
                 await axios.put('users/password', {
