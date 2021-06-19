@@ -23,13 +23,13 @@
               </li>
               <li class="list-group-item d-flex justify-content-between lh-sm">                
                 <h6 class="my-0">Quantity</h6>
-                <input type="number" min="0" class="text-muted form-control quantity"/>
+                <input type="number" min="0" class="text-muted form-control quantity" v-model="quantities[product.id]"/>
                 </li>
               </li>
             </template>
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
-              <strong>$20</strong>
+              <strong>${{ total }}</strong>
             </li>
           </ul>
         </div>
@@ -95,18 +95,32 @@
 
       const user = data.user;
       const products = data.products;
+      let quantities = [];
+
+      products.forEach(p => {
+        quantities[p.id] = 0;
+      });
 
       return {
         user,
-        products
+        products,
+        quantities
       }
     },
     data() {
       return {
         user: null,
-        products: []
+        products: [],
+        quantities: []
       }
     },
+    computed: {
+      total() {
+        return this.products.reduce((sum, product)=> {
+          return sum + product.price * this.quantities[product.id];
+        }, 0);
+      }
+    }
   })
 </script>
 
