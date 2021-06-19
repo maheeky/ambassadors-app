@@ -36,41 +36,41 @@
 
         <div class="col-md-7 col-lg-8">
           <h4 class="mb-3">Personal Information</h4>
-          <form class="needs-validation" novalidate>
+          <form class="needs-validation" @submit.prevent="submit">
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="firstName" class="form-label">First name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                <input type="text" class="form-control" id="firstName" placeholder="First Name" v-model="first_name" required>
               </div>
 
               <div class="col-sm-6">
                 <label for="lastName" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name" v-model="last_name" required>
               </div>
 
               <div class="col-12">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                <input type="email" class="form-control" id="email" placeholder="you@example.com" v-model="email">
               </div>
 
               <div class="col-12">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                <input type="text" class="form-control" id="address" placeholder="1234 Main St" v-model="address" required>
               </div>
 
               <div class="col-md-5">
                 <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-select" id="country" placeholder="Country" required/>
+                <input type="text" class="form-select" id="country" placeholder="Country" v-model="country" required/>
               </div>
 
               <div class="col-md-4">
                 <label for="state" class="form-label">City</label>
-                <input type="text" class="form-select" id="state" placeholder="City" required>
+                <input type="text" class="form-select" id="state" placeholder="City" v-model="city" required>
               </div>
 
               <div class="col-md-3">
                 <label for="zip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="Zip" required>
+                <input type="text" class="form-control" id="zip" placeholder="Zip" v-model="zip" required>
               </div>
             </div>
 
@@ -111,7 +111,36 @@
       return {
         user: null,
         products: [],
-        quantities: []
+        quantities: [],
+        first_name: '',
+        last_name: '',
+        email: '',
+        address: '',
+        country: '',
+        city: '',
+        zip: '',
+      }
+    },
+    methods: {
+      async submit() {
+        const {data} = await this.$axios.post('orders', {
+          first_name: this.first_name,
+          last_name: this.last_name,
+          email: this.email,
+          address: this.address,
+          country: this.country,
+          city: this.city,
+          zip: this.zip,
+          code: this.$route.params.code,
+          products: this.products.map(p => ({
+            product_id: p.id,
+            quantity: this.quantities[p.id]
+          })),
+        })
+
+        await this.$stripe?.redirectToCheckout({
+          sessionId: data.id
+        });
       }
     },
     computed: {

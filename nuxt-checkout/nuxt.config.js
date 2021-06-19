@@ -36,10 +36,11 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/bootstrap
-    'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    ['nuxt-stripe-module', {
+      publishableKey: 'pk_test_51J2b4dFla5G2Ehne7MM3EuvW5pevrPUAEhLfx60iG4JhAz5qGtkicuZ0AYhq1qxafMowbn9RJk0CeF1GTnrGQlq1007iO96LAX'
+    }]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
